@@ -1,0 +1,9 @@
+# requirements/train.txt -- deep-learning and data-science stack (Mac full install; Colab uses its own torch).
+-r base.txt
+torch==2.6.0
+torchvision==0.21.0
+scipy==1.14.1
+matplotlib==3.9.2
+pandas==2.2.3
+pycocotools==2.0.8
+imagehash==4.3.1

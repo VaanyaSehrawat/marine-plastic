@@ -1,0 +1,22 @@
+# configs/data.yaml -- defaults for Milestone 3 (used by notebooks/01_bepli_colab_inspection.ipynb).
+dataset:
+  name: bepli_v2
+  record: "https://www.seanoe.org/data/00858/96963/"      # DOI 10.17882/96963, licence CC BY-NC-SA 4.0 per record
+  # Statistics below are CLAIMS from summaries/papers. They are checked against the real files, not trusted.
+  claimed:
+    images: 3722
+    classes: 13
+    annotations: 118572      # UNVERIFIED (the v1 paper reports 119,192 annotations for v1)
+inspection:
+  sample_decode: 300
+leakage:
+  dup_threshold: 6           # dHash Hamming distance (64-bit); <=6 ~ near-identical
+  block_size: 0              # set e.g. 20 only after checking that consecutive file numbers share a site visit
+split:
+  ratios: [0.70, 0.15, 0.15]
+  seed: 42
+tiles:
+  tile: 224
+  stride: 224
+  pos_frac: 0.02
+  margin: 16

@@ -1,0 +1,40 @@
+# --- OS / editor ---
+.DS_Store
+.idea/
+*.swp
+
+# --- Project-local toolchain & environments (created by setup.sh) ---
+.tools/
+.venv/
+logs/
+
+# --- Python ---
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+*.egg-info/
+
+# --- Java build output and downloaded jars ---
+java/out/
+java/lib/*.jar
+java/lib/*.sha256
+
+# --- Large / generated artifacts (documented in docs/, never committed) ---
+data/raw/*
+data/interim/*
+data/processed/*
+!data/raw/.gitkeep
+!data/interim/.gitkeep
+!data/processed/.gitkeep
+models/*
+!models/.gitkeep
+!models/MODELS.md
+build/
+*.onnx
+*.pt
+*.pth
+*.ckpt
+*.npz
+*.f32
+# Small result files ARE committed: experiments/**/metrics.json, data/splits/*.json
