@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marine Plastic Detection and Coastal Cleanup Planner</title>
+<style>
+:root{--bg:#0d1b24;--panel:#142835;--line:#22414f;--ink:#e8f1f5;--mute:#8fa9b8;--acc:#19c3b1}
+*{box-sizing:border-box}
+body{margin:0;font:14px/1.45 -apple-system,system-ui,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink)}
+header{padding:14px 22px;border-bottom:1px solid var(--line)}
+h1{margin:0;font-size:19px;font-weight:650}
+header small{color:var(--mute)}
+.bar{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:end;padding:12px 22px;background:var(--panel);border-bottom:1px solid var(--line)}
+.bar label{display:flex;flex-direction:column;gap:4px;color:var(--mute);font-size:12px}
+.bar .chk{flex-direction:row;align-items:center;gap:6px;color:var(--ink)}
+select,input[type=number],input[type=file]{background:#0d1b24;color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:6px;max-width:210px}
+input[type=number]{width:70px}
+button{background:var(--acc);color:#06201c;border:0;border-radius:8px;padding:9px 18px;font-weight:650;cursor:pointer}
+main{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:16px;padding:16px 22px}
+@media(max-width:1000px){main{grid-template-columns:1fr}}
+.stage{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px}
+canvas{display:block;max-width:100%;border-radius:6px}
+aside{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px}
+.k{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--line)}
+.k b{font-variant-numeric:tabular-nums}
+h3{margin:14px 0 6px;font-size:13px;color:var(--mute);text-transform:uppercase;letter-spacing:.06em}
+.sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px}
+#status{color:var(--mute);padding:6px 2px}
+footer{padding:0 22px 20px;color:var(--mute);font-size:12px}
+</style>
+</head>
+<body>
+<header>
+<h1>Marine Plastic Detection and Coastal Cleanup Planner</h1>
+<small>YOLO11s (1280 px) running in Java via ONNX Runtime | image-space tile planner</small>
+</header>
+<div class="bar">
+<label>Sample image<select id="sample"></select></label>
+<label>or upload<input type="file" id="file" accept="image/png,image/jpeg"></label>
+<label>Confidence <output id="confOut">0.25</output><input type="range" id="conf" min="0.10" max="0.80" step="0.05" value="0.25"></label>
+<label>Grid rows<input type="number" id="rows" min="2" max="20" value="6"></label>
+<label>Grid columns<input type="number" id="cols" min="2" max="20" value="8"></label>
+<label>Tile threshold <output id="thrOut">1.0</output><input type="range" id="thr" min="0" max="8" step="0.25" value="1"></label>
+<label class="chk"><input type="checkbox" id="lBoxes" checked> boxes</label>
+<label class="chk"><input type="checkbox" id="lHeat" checked> heatmap</label>
+<label class="chk"><input type="checkbox" id="lRoute" checked> route</label>
+<button id="go">Analyze</button>
+</div>
+<main>
+<div class="stage"><canvas id="cv" width="900" height="600"></canvas><div id="status">Choose an image and click Analyze.</div></div>
+<aside>
+<h3>Detection</h3>
+<div class="k"><span>Objects</span><b id="mObj">-</b></div>
+<div class="k"><span>Inference (CPU)</span><b id="mMs">-</b></div>
+<h3>Cleanup plan</h3>
+<div class="k"><span>Tiles to visit</span><b id="mSel">-</b></div>
+<div class="k"><span>Planned route length</span><b id="mPlan">-</b></div>
+<div class="k"><span>Serpentine, same tiles</span><b id="mSerp">-</b></div>
+<div class="k"><span>Planned vs serpentine</span><b id="mSave">-</b></div>
+<h3>Classes</h3>
+<div id="classes"></div>
+</aside>
+</main>
+<footer>The route is an inspection order over an image-space tile grid (lengths in tile units), not GPS navigation. Tile priority uses fixed class weights (nets and fishing gear highest) multiplied by detection confidence.</footer>
+<script>
+const $ = id => document.getElementById(id);
+const cv = $("cv"), ctx = cv.getContext("2d"), img = new Image();
+let last = null;
+const hue = c => `hsl(${Math.round(c * 360 / 13)},90%,55%)`;
+
+async function init() {
+  const names = await (await fetch("/api/samples")).json();
+  $("sample").innerHTML = names.map(n => `<option>${n}</option>`).join("");
+  if (names.length) { img.onload = draw; img.src = "/sample/" + names[0]; }
+}
+$("conf").oninput = () => $("confOut").textContent = $("conf").value;
+$("thr").oninput = () => $("thrOut").textContent = $("thr").value;
+$("sample").onchange = () => { $("file").value = ""; last = null; img.src = "/sample/" + $("sample").value; };
+$("file").onchange = () => { const f = $("file").files[0]; if (f) { last = null; img.src = URL.createObjectURL(f); } };
+["lBoxes", "lHeat", "lRoute"].forEach(id => $(id).onchange = draw);
+
+$("go").onclick = async () => {
+  const q = new URLSearchParams({conf: $("conf").value, rows: $("rows").value, cols: $("cols").value, thr: $("thr").value});
+  const f = $("file").files[0], opts = {method: "POST"};
+  if (f) opts.body = f; else q.set("sample", $("sample").value);
+  $("status").textContent = "Analyzing...";
+  try {
+    const res = await fetch("/api/analyze?" + q, opts), data = await res.json();
+    if (!res.ok) throw new Error(data.error || res.status);
+    last = data; $("status").textContent = ""; panel(); draw();
+  } catch (e) { $("status").textContent = "Error: " + e.message; }
+};
+
+function panel() {
+  const m = last.metrics;
+  $("mObj").textContent = last.nDet;
+  $("mMs").textContent = last.inferMs.toFixed(0) + " ms";
+  $("mSel").textContent = m.selected + " of " + last.grid.rows * last.grid.cols;
+  $("mPlan").textContent = m.planned.toFixed(2);
+  $("mSerp").textContent = m.serpentine.toFixed(2);
+  $("mSave").textContent = m.selected < 2 ? "n/a" : (m.savedPct >= 0 ? "shorter by " : "longer by ") + Math.abs(m.savedPct).toFixed(1) + "%";
+  const entries = Object.entries(last.classCounts).sort((a, b) => b[1] - a[1]);
+  const idx = {};
+  last.detections.forEach(d => idx[d.n] = d.c);
+  $("classes").innerHTML = entries.map(([n, c]) => `<div class="k"><span><span class="sw" style="background:${hue(idx[n])}"></span>${n}</span><b>${c}</b></div>`).join("") || "none";
+}
+
+function draw() {
+  if (!img.complete || !img.naturalWidth) return;
+  const W = Math.min(1100, cv.parentElement.clientWidth - 20), s = W / img.naturalWidth;
+  cv.width = W; cv.height = Math.round(img.naturalHeight * s);
+  ctx.drawImage(img, 0, 0, cv.width, cv.height);
+  if (!last) return;
+  const g = last.grid, tw = cv.width / g.cols, th = cv.height / g.rows, thr = last.metrics.threshold;
+  let mx = 0;
+  g.score.forEach(r => r.forEach(v => mx = Math.max(mx, v)));
+  if ($("lHeat").checked) {
+    for (let r = 0; r < g.rows; r++) for (let c = 0; c < g.cols; c++) {
+      const v = g.score[r][c];
+      if (v > 0 && mx > 0) { ctx.fillStyle = `rgba(255,70,50,${(0.12 + 0.5 * v / mx).toFixed(2)})`; ctx.fillRect(c * tw, r * th, tw, th); }
+      ctx.strokeStyle = v >= thr && g.count[r][c] > 0 ? "rgba(255,255,255,.9)" : "rgba(255,255,255,.18)";
+      ctx.lineWidth = v >= thr && g.count[r][c] > 0 ? 2 : 1;
+      ctx.strokeRect(c * tw, r * th, tw, th);
+    }
+  }
+  if ($("lBoxes").checked) {
+    ctx.lineWidth = 1.6;
+    last.detections.forEach(d => {
+      ctx.strokeStyle = hue(d.c);
+      ctx.strokeRect(d.b[0] * s, d.b[1] * s, (d.b[2] - d.b[0]) * s, (d.b[3] - d.b[1]) * s);
+    });
+  }
+  if ($("lRoute").checked && last.route.length) {
+    const p = t => [(t[1] + 0.5) * tw, (t[0] + 0.5) * th];
+    ctx.strokeStyle = "#ffe14d"; ctx.lineWidth = 3; ctx.beginPath();
+    ctx.moveTo(0.5 * tw, 0.5 * th);
+    last.route.forEach(t => ctx.lineTo(...p(t)));
+    ctx.stroke();
+    ctx.fillStyle = "#06201c"; ctx.strokeStyle = "#ffe14d"; ctx.font = "bold 12px sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    last.route.forEach((t, i) => {
+      const [x, y] = p(t);
+      ctx.beginPath(); ctx.arc(x, y, 11, 0, 7); ctx.fillStyle = "#ffe14d"; ctx.fill();
+      ctx.fillStyle = "#06201c"; ctx.fillText(i + 1, x, y + 1);
+    });
+  }
+}
+window.onresize = draw;
+init();
+</script>
+</body>
+</html>

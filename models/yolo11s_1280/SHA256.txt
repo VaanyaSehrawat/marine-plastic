@@ -1,0 +1,2 @@
+7adfc1e1ce3bf7295bd78aad8a695577960a35dea4da3c5dae2e8a114f8a9c40  yolo11s_1280_best.onnx
+79e633ff7e59195a82c01ecb898ad0800e42b6bf4c2a8bab8e29dcf70d6305bf  yolo11s_1280_best.pt
