@@ -32,3 +32,8 @@ Last updated: 2026-11-05.
 | O-03 | Faculty acceptance of "VAE only" for the GAN/VAE requirement. | Before 16 Nov |
 | O-04 | Segmentation (Mask R-CNN) in or out. | 16 Nov cut line |
 | O-05 | Number of BePLi annotations in v2 (claimed ~118,572: UNVERIFIED; v1 paper reports 119,192). | M3 inspection output |
+
+## Update 14 Nov 2026 - D-08 (supersedes D-06 for the primary detector)
+| ID | Decision | Reason / evidence |
+|---|---|---|
+| D-08 | Primary detector is Ultralytics YOLO11s (1280 px), trained on Kaggle T4 on the official BePLi v2 splits, exported to ONNX and run from Java with ONNX Runtime 1.20.0. Torchvision Faster R-CNN / RetinaNet are optional comparison baselines only. | Official-test mAP50 0.237, mAP50-95 0.144; class-agnostic mAP50 0.558. ONNX vs PyTorch max box difference 0.0072 px. Java fixture test PASS (scripts/detect_java.sh). Licence: Ultralytics code and weights are AGPL-3.0 and BePLi is CC BY-NC-SA 4.0; acceptable for this non-commercial academic project, and any redistribution must follow both. |

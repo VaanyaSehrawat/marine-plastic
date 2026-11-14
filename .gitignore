@@ -38,3 +38,7 @@ build/
 *.npz
 *.f32
 # Small result files ARE committed: experiments/**/metrics.json, data/splits/*.json
+backups/
+models/**/*.pt
+models/**/*.onnx
+build/detect_demo/

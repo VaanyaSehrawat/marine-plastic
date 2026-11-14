@@ -44,3 +44,9 @@ Static inspection only: macOS branches of setup.sh, `env.sh` zsh/bash behaviour 
 2. **If M2 passes:** update this file's status (Mac rows -> M), run `bash setup.sh` (full) once, then start M3 on Colab per `docs/M3_DATASET_VALIDATION.md`.
 3. **If the Java step fails** with natives/arch errors: do not reopen the version decision first; send diagnostics to Claude; fallback D-07 (HTTP detector) is pre-approved.
 4. **Claude after M3:** builds the M4 training/eval/ONNX-export pipeline against the real measured classes (details at the end of docs/M3_DATASET_VALIDATION.md).
+
+## Status 14 Nov 2026 (student's Mac and Kaggle, real data)
+- M3 done: BePLi v2 verified (3,722 images, 118,572 annotations), no filename/MD5 overlap across splits, no flagged near-duplicates in test.
+- M4 baseline: YOLO11s @1280, official test mAP50 0.237 / mAP50-95 0.144, class-agnostic mAP50 0.558. YOLO11m comparison pending.
+- M5: Java ONNX detector in java/app/src/main/java/mp/app/detect, fixture test PASS on the Mac (JDK 21, ORT 1.20.0). Run: bash scripts/detect_java.sh
+- Model files: models/yolo11s_1280 (weights ignored by git; hashes in SHA256.txt; restore from backups zip).
