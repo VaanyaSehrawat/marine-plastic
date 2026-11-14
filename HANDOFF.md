@@ -50,3 +50,9 @@ Static inspection only: macOS branches of setup.sh, `env.sh` zsh/bash behaviour 
 - M4 baseline: YOLO11s @1280, official test mAP50 0.237 / mAP50-95 0.144, class-agnostic mAP50 0.558. YOLO11m comparison pending.
 - M5: Java ONNX detector in java/app/src/main/java/mp/app/detect, fixture test PASS on the Mac (JDK 21, ORT 1.20.0). Run: bash scripts/detect_java.sh
 - Model files: models/yolo11s_1280 (weights ignored by git; hashes in SHA256.txt; restore from backups zip).
+
+## Status 14 Nov 2026 (late)
+- M5 done: Java ONNX detector, fixture test PASS (scripts/detect_java.sh).
+- M6 done: cleanup planner (tile scores, NN + 2-opt route vs serpentine baseline, tile units) and Java dashboard. Run: bash scripts/run_app.sh. Self-test: bash scripts/run_app.sh --selftest.
+- M7 started: Java fundamentals module java/fundamentals (Tensor, SVD, MLP, SGD/Momentum/Adam, Oja, competitive learning). Run: bash scripts/run_fundamentals.sh.
+- Pending: YOLO11m comparison (Kaggle), transformer route-context, VAE/GAN, evaluation package, report, demo. Open: faculty decision on VAE-only (O-03).
