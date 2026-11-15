@@ -33,7 +33,7 @@ footer{padding:0 22px 20px;color:var(--mute);font-size:12px}
 <body>
 <header>
 <h1>Marine Plastic Detection and Coastal Cleanup Planner</h1>
-<small>YOLO11s (1280 px) running in Java via ONNX Runtime | image-space tile planner</small>
+<small>YOLO11 (1280 px) running in Java via ONNX Runtime | image-space tile planner</small>
 </header>
 <div class="bar">
 <label>Sample image<select id="sample"></select></label>
@@ -42,6 +42,7 @@ footer{padding:0 22px 20px;color:var(--mute);font-size:12px}
 <label>Grid rows<input type="number" id="rows" min="2" max="20" value="6"></label>
 <label>Grid columns<input type="number" id="cols" min="2" max="20" value="8"></label>
 <label>Tile threshold <output id="thrOut">1.0</output><input type="range" id="thr" min="0" max="8" step="0.25" value="1"></label>
+<label>Scoring<select id="scoring"><option value="heuristic">Heuristic (class weights)</option><option value="learned">Learned (transformer)</option></select></label>
 <label class="chk"><input type="checkbox" id="lBoxes" checked> boxes</label>
 <label class="chk"><input type="checkbox" id="lHeat" checked> heatmap</label>
 <label class="chk"><input type="checkbox" id="lRoute" checked> route</label>
@@ -54,6 +55,7 @@ footer{padding:0 22px 20px;color:var(--mute);font-size:12px}
 <div class="k"><span>Objects</span><b id="mObj">-</b></div>
 <div class="k"><span>Inference (CPU)</span><b id="mMs">-</b></div>
 <h3>Cleanup plan</h3>
+<div class="k"><span>Scoring</span><b id="mScore">-</b></div>
 <div class="k"><span>Tiles to visit</span><b id="mSel">-</b></div>
 <div class="k"><span>Planned route length</span><b id="mPlan">-</b></div>
 <div class="k"><span>Serpentine, same tiles</span><b id="mSerp">-</b></div>
@@ -81,7 +83,7 @@ $("file").onchange = () => { const f = $("file").files[0]; if (f) { last = null;
 ["lBoxes", "lHeat", "lRoute"].forEach(id => $(id).onchange = draw);
 
 $("go").onclick = async () => {
-  const q = new URLSearchParams({conf: $("conf").value, rows: $("rows").value, cols: $("cols").value, thr: $("thr").value});
+  const q = new URLSearchParams({conf: $("conf").value, rows: $("rows").value, cols: $("cols").value, thr: $("thr").value, scoring: $("scoring").value});
   const f = $("file").files[0], opts = {method: "POST"};
   if (f) opts.body = f; else q.set("sample", $("sample").value);
   $("status").textContent = "Analyzing...";
@@ -96,6 +98,7 @@ function panel() {
   const m = last.metrics;
   $("mObj").textContent = last.nDet;
   $("mMs").textContent = last.inferMs.toFixed(0) + " ms";
+  $("mScore").textContent = last.scoring === "learned" ? "learned (transformer)" : "heuristic";
   $("mSel").textContent = m.selected + " of " + last.grid.rows * last.grid.cols;
   $("mPlan").textContent = m.planned.toFixed(2);
   $("mSerp").textContent = m.serpentine.toFixed(2);
@@ -119,8 +122,8 @@ function draw() {
     for (let r = 0; r < g.rows; r++) for (let c = 0; c < g.cols; c++) {
       const v = g.score[r][c];
       if (v > 0 && mx > 0) { ctx.fillStyle = `rgba(255,70,50,${(0.12 + 0.5 * v / mx).toFixed(2)})`; ctx.fillRect(c * tw, r * th, tw, th); }
-      ctx.strokeStyle = v >= thr && g.count[r][c] > 0 ? "rgba(255,255,255,.9)" : "rgba(255,255,255,.18)";
-      ctx.lineWidth = v >= thr && g.count[r][c] > 0 ? 2 : 1;
+      ctx.strokeStyle = v >= thr && (last.scoring === "learned" || g.count[r][c] > 0) ? "rgba(255,255,255,.9)" : "rgba(255,255,255,.18)";
+      ctx.lineWidth = v >= thr && (last.scoring === "learned" || g.count[r][c] > 0) ? 2 : 1;
       ctx.strokeRect(c * tw, r * th, tw, th);
     }
   }

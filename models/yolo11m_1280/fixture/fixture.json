@@ -1,0 +1,388 @@
+{
+ "imgsz": 1280,
+ "conf": 0.25,
+ "iou": 0.7,
+ "max_det": 400,
+ "model": "yolo11m_1280",
+ "letterbox": "resize keep ratio bilinear, pad 114, left=round((1280-nw)/2-0.1), top=round((1280-nh)/2-0.1)",
+ "names": [
+  "pet_bottle",
+  "other_bottle",
+  "plastic_bag",
+  "box_shaped_case",
+  "other_container",
+  "rope",
+  "other_string",
+  "fishing_net",
+  "buoy",
+  "other_fishing_gear",
+  "styrene_foam",
+  "others",
+  "fragment"
+ ],
+ "images": [
+  {
+   "file": "001075.png",
+   "orig_w": 640,
+   "orig_h": 480,
+   "scale": 2.0,
+   "pad_left": 0,
+   "pad_top": 160,
+   "n_detections": 93,
+   "top10": [
+    {
+     "cls": 12,
+     "name": "fragment",
+     "conf": 0.6672,
+     "box_letterbox_xyxy": [
+      195.31,
+      1082.61,
+      216.31,
+      1089.75
+     ]
+    },
+    {
+     "cls": 12,
+     "name": "fragment",
+     "conf": 0.6275,
+     "box_letterbox_xyxy": [
+      625.91,
+      1041.82,
+      652.82,
+      1063.22
+     ]
+    },
+    {
+     "cls": 12,
+     "name": "fragment",
+     "conf": 0.6059,
+     "box_letterbox_xyxy": [
+      563.16,
+      1104.51,
+      577.98,
+      1118.77
+     ]
+    },
+    {
+     "cls": 12,
+     "name": "fragment",
+     "conf": 0.6037,
+     "box_letterbox_xyxy": [
+      195.89,
+      938.83,
+      217.03,
+      946.31
+     ]
+    },
+    {
+     "cls": 12,
+     "name": "fragment",
+     "conf": 0.5863,
+     "box_letterbox_xyxy": [
+      498.13,
+      1110.7,
+      514.92,
+      1118.11
+     ]
+    },
+    {
+     "cls": 12,
+     "name": "fragment",
+     "conf": 0.5833,
+     "box_letterbox_xyxy": [
+      162.04,
+      794.6,
+      177.12,
+      800.51
+     ]
+    },
+    {
+     "cls": 12,
+     "name": "fragment",
+     "conf": 0.5784,
+     "box_letterbox_xyxy": [
+      452.51,
+      387.84,
+      470.44,
+      401.88
+     ]
+    },
+    {
+     "cls": 12,
+     "name": "fragment",
+     "conf": 0.5721,
+     "box_letterbox_xyxy": [
+      336.79,
+      911.02,
+      358.29,
+      917.57
+     ]
+    },
+    {
+     "cls": 12,
+     "name": "fragment",
+     "conf": 0.5635,
+     "box_letterbox_xyxy": [
+      95.33,
+      686.35,
+      113.13,
+      692.35
+     ]
+    },
+    {
+     "cls": 12,
+     "name": "fragment",
+     "conf": 0.5481,
+     "box_letterbox_xyxy": [
+      170.65,
+      840.24,
+      185.88,
+      846.23
+     ]
+    }
+   ]
+  },
+  {
+   "file": "002907.png",
+   "orig_w": 743,
+   "orig_h": 557,
+   "scale": 1.7227456258411844,
+   "pad_left": 0,
+   "pad_top": 160,
+   "n_detections": 12,
+   "top10": [
+    {
+     "cls": 4,
+     "name": "other_container",
+     "conf": 0.7126,
+     "box_letterbox_xyxy": [
+      223.8,
+      428.21,
+      268.11,
+      455.85
+     ]
+    },
+    {
+     "cls": 8,
+     "name": "buoy",
+     "conf": 0.6189,
+     "box_letterbox_xyxy": [
+      76.55,
+      346.57,
+      112.07,
+      375.3
+     ]
+    },
+    {
+     "cls": 10,
+     "name": "styrene_foam",
+     "conf": 0.5609,
+     "box_letterbox_xyxy": [
+      133.9,
+      348.68,
+      169.74,
+      371.24
+     ]
+    },
+    {
+     "cls": 11,
+     "name": "others",
+     "conf": 0.4094,
+     "box_letterbox_xyxy": [
+      463.22,
+      641.14,
+      512.58,
+      677.78
+     ]
+    },
+    {
+     "cls": 12,
+     "name": "fragment",
+     "conf": 0.396,
+     "box_letterbox_xyxy": [
+      110.96,
+      456.55,
+      126.97,
+      464.24
+     ]
+    },
+    {
+     "cls": 12,
+     "name": "fragment",
+     "conf": 0.3729,
+     "box_letterbox_xyxy": [
+      112.32,
+      731.91,
+      129.12,
+      742.35
+     ]
+    },
+    {
+     "cls": 12,
+     "name": "fragment",
+     "conf": 0.3271,
+     "box_letterbox_xyxy": [
+      183.94,
+      334.83,
+      208.62,
+      347.53
+     ]
+    },
+    {
+     "cls": 8,
+     "name": "buoy",
+     "conf": 0.3226,
+     "box_letterbox_xyxy": [
+      778.07,
+      376.21,
+      792.86,
+      388.26
+     ]
+    },
+    {
+     "cls": 12,
+     "name": "fragment",
+     "conf": 0.3202,
+     "box_letterbox_xyxy": [
+      463.23,
+      641.89,
+      512.61,
+      678.1
+     ]
+    },
+    {
+     "cls": 8,
+     "name": "buoy",
+     "conf": 0.3128,
+     "box_letterbox_xyxy": [
+      133.97,
+      348.76,
+      169.91,
+      371.24
+     ]
+    }
+   ]
+  },
+  {
+   "file": "003278.png",
+   "orig_w": 1041,
+   "orig_h": 779,
+   "scale": 1.229586935638809,
+   "pad_left": 0,
+   "pad_top": 161,
+   "n_detections": 13,
+   "top10": [
+    {
+     "cls": 12,
+     "name": "fragment",
+     "conf": 0.7695,
+     "box_letterbox_xyxy": [
+      54.71,
+      728.89,
+      76.72,
+      754.31
+     ]
+    },
+    {
+     "cls": 7,
+     "name": "fishing_net",
+     "conf": 0.7475,
+     "box_letterbox_xyxy": [
+      1123.0,
+      663.42,
+      1192.02,
+      719.61
+     ]
+    },
+    {
+     "cls": 7,
+     "name": "fishing_net",
+     "conf": 0.592,
+     "box_letterbox_xyxy": [
+      619.76,
+      774.03,
+      655.05,
+      803.62
+     ]
+    },
+    {
+     "cls": 5,
+     "name": "rope",
+     "conf": 0.4988,
+     "box_letterbox_xyxy": [
+      766.86,
+      488.96,
+      814.68,
+      505.74
+     ]
+    },
+    {
+     "cls": 5,
+     "name": "rope",
+     "conf": 0.4896,
+     "box_letterbox_xyxy": [
+      1104.75,
+      787.63,
+      1162.48,
+      1029.81
+     ]
+    },
+    {
+     "cls": 12,
+     "name": "fragment",
+     "conf": 0.4255,
+     "box_letterbox_xyxy": [
+      57.67,
+      768.14,
+      65.29,
+      773.6
+     ]
+    },
+    {
+     "cls": 7,
+     "name": "fishing_net",
+     "conf": 0.3454,
+     "box_letterbox_xyxy": [
+      572.11,
+      657.5,
+      690.47,
+      724.38
+     ]
+    },
+    {
+     "cls": 7,
+     "name": "fishing_net",
+     "conf": 0.3263,
+     "box_letterbox_xyxy": [
+      1174.14,
+      570.45,
+      1280.15,
+      668.42
+     ]
+    },
+    {
+     "cls": 5,
+     "name": "rope",
+     "conf": 0.3222,
+     "box_letterbox_xyxy": [
+      698.18,
+      667.47,
+      723.17,
+      692.45
+     ]
+    },
+    {
+     "cls": 5,
+     "name": "rope",
+     "conf": 0.3198,
+     "box_letterbox_xyxy": [
+      195.04,
+      703.06,
+      447.77,
+      859.71
+     ]
+    }
+   ]
+  }
+ ]
+}

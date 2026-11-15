@@ -40,6 +40,16 @@ public final class CleanupPlanner {
         return new Plan(rows, cols, sc, cnt, route, length(route), length(serpentine(sel)), sel.size());
     }
 
+    /** Externally supplied tile scores (for example from the learned route model). cnt is only used for display. */
+    public static Plan planFromScores(double[][] sc, int[][] cnt, int rows, int cols, double threshold) {
+        List<int[]> sel = new ArrayList<>();
+        for (int r = 0; r < rows; r++)
+            for (int c = 0; c < cols; c++)
+                if (sc[r][c] >= threshold) sel.add(new int[] {r, c});
+        List<int[]> route = twoOpt(nearestNeighbour(sel));
+        return new Plan(rows, cols, sc, cnt, route, length(route), length(serpentine(sel)), sel.size());
+    }
+
     private static double d(int[] a, int[] b) { return Math.hypot(a[0] - b[0], a[1] - b[1]); }
 
     /** Path length in tile units, starting from the entry tile (0,0). */

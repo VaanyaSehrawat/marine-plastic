@@ -1,0 +1,66 @@
+{
+ "rows": 6,
+ "cols": 8,
+ "n_features": 15,
+ "conf_min": 0.1,
+ "names": [
+  "pet_bottle",
+  "other_bottle",
+  "plastic_bag",
+  "box_shaped_case",
+  "other_container",
+  "rope",
+  "other_string",
+  "fishing_net",
+  "buoy",
+  "other_fishing_gear",
+  "styrene_foam",
+  "others",
+  "fragment"
+ ],
+ "weights": {
+  "fishing_net": 3.0,
+  "other_fishing_gear": 3.0,
+  "buoy": 2.5,
+  "pet_bottle": 2.0,
+  "other_bottle": 2.0,
+  "plastic_bag": 2.0,
+  "box_shaped_case": 2.0,
+  "other_container": 2.0,
+  "rope": 2.0,
+  "other_string": 1.5,
+  "styrene_foam": 1.5,
+  "others": 1.0,
+  "fragment": 0.5
+ },
+ "input": "tiles [1,48,15]",
+ "features": "per tile: log1p of [sum of detection confidences for each of 13 classes, detection count, max confidence]; detection centre decides the tile; detections with conf>=0.10 from YOLO11m (letterbox 1280, NMS iou 0.7)",
+ "output": "priority [1,48], log1p scale of weighted ground-truth priority",
+ "seed": 2,
+ "metrics": {
+  "random": [
+   -0.007026367026391732,
+   0.09475409836065574,
+   610
+  ],
+  "detector_only": [
+   0.5306935849731265,
+   0.5239344262295083,
+   610
+  ],
+  "tile_mlp": {
+   "spearman_mean": 0.6598015093368795,
+   "spearman_std": 0.0009195784502116856,
+   "top5_mean": 0.5899453551912569,
+   "top5_std": 0.0006737064484118969,
+   "params": 20737
+  },
+  "transformer": {
+   "spearman_mean": 0.6611170165861776,
+   "spearman_std": 0.0009286630634150956,
+   "top5_mean": 0.5911475409836066,
+   "top5_std": 0.0017554511917168196,
+   "params": 71233
+  }
+ }
+}

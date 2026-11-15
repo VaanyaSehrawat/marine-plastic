@@ -9,7 +9,7 @@ HTML="$ROOT/java/app/src/main/resources/dashboard.html"
 OUT="$ROOT/java/out"; MODE="${1:-run}"
 for f in "$JAVAC" "$JAR" "$MODEL" "$FIX/fixture.json" "$HTML"; do [ -e "$f" ] || { echo "MISSING: $f"; exit 1; }; done
 mkdir -p "$OUT" build
-"$JAVAC" -encoding UTF-8 -cp "$JAR" -d "$OUT" java/app/src/main/java/mp/app/detect/*.java java/app/src/main/java/mp/app/planner/*.java java/app/src/main/java/mp/app/server/*.java
+"$JAVAC" -encoding UTF-8 -cp "$JAR" -d "$OUT" java/app/src/main/java/mp/app/detect/*.java java/app/src/main/java/mp/app/planner/*.java java/app/src/main/java/mp/app/route/*.java java/app/src/main/java/mp/app/server/*.java
 echo "COMPILED OK"
 CP="$OUT:$JAR"
 "$JAVA" -cp "$CP" mp.app.planner.PlannerTest

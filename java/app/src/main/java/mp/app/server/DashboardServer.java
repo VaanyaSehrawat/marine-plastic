@@ -24,10 +24,12 @@ import mp.app.detect.Detection;
 import mp.app.detect.MiniJson;
 import mp.app.detect.YoloOnnxDetector;
 import mp.app.planner.CleanupPlanner;
+import mp.app.route.RouteScorer;
 
 /** Local Java-served dashboard: GET /, GET /api/samples, GET /sample/{file}, POST /api/analyze. */
 public final class DashboardServer {
     private static YoloOnnxDetector detector;
+    private static RouteScorer router;
     private static Path fixtureDir, htmlPath;
 
     public static void main(String[] a) throws Exception {
@@ -40,6 +42,10 @@ public final class DashboardServer {
         List<String> names = new ArrayList<>();
         for (Object o : MiniJson.asList(info.get("names"))) names.add((String) o);
         detector = new YoloOnnxDetector(model.toString(), names, 0.10f, 0.7f, 400);
+        if (a.length > 4 && Files.exists(Path.of(a[4]))) {
+            router = new RouteScorer(a[4]);
+            System.out.println("Route transformer loaded: " + a[4]);
+        }
         HttpServer srv = HttpServer.create(new InetSocketAddress("127.0.0.1", port), 0);
         srv.createContext("/", DashboardServer::route);
         srv.start();
@@ -92,11 +98,21 @@ public final class DashboardServer {
         List<Detection> dets = new ArrayList<>();
         for (Detection d : r.detections()) if (d.conf() >= conf) dets.add(d);
         CleanupPlanner.Plan plan = CleanupPlanner.plan(dets, w, h, rows, cols, thr);
+        String mode = "heuristic";
+        if ("learned".equals(q.get("scoring")) && router != null && rows == RouteScorer.R && cols == RouteScorer.C) {
+            float[] pr;
+            synchronized (router) { pr = router.priority(RouteScorer.features(r.detections(), w, h, 0.10f)); }
+            double[][] sc = new double[rows][cols];
+            for (int i = 0; i < rows; i++)
+                for (int j = 0; j < cols; j++) sc[i][j] = Math.expm1(Math.max(0.0, pr[i * cols + j]));
+            plan = CleanupPlanner.planFromScores(sc, plan.count(), rows, cols, thr);
+            mode = "learned";
+        }
 
         StringBuilder sb = new StringBuilder(8192);
         sb.append("{\"width\":").append(w).append(",\"height\":").append(h)
           .append(",\"inferMs\":").append(f(r.inferenceMs())).append(",\"conf\":").append(f(conf))
-          .append(",\"nDet\":").append(dets.size()).append(",\"detections\":[");
+          .append(",\"nDet\":").append(dets.size()).append(",\"scoring\":\"").append(mode).append("\",\"detections\":[");
         Map<String, Integer> cc = new TreeMap<>();
         for (int i = 0; i < dets.size(); i++) {
             Detection d = dets.get(i);

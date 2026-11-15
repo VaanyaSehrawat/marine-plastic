@@ -56,3 +56,9 @@ Static inspection only: macOS branches of setup.sh, `env.sh` zsh/bash behaviour 
 - M6 done: cleanup planner (tile scores, NN + 2-opt route vs serpentine baseline, tile units) and Java dashboard. Run: bash scripts/run_app.sh. Self-test: bash scripts/run_app.sh --selftest.
 - M7 started: Java fundamentals module java/fundamentals (Tensor, SVD, MLP, SGD/Momentum/Adam, Oja, competitive learning). Run: bash scripts/run_fundamentals.sh.
 - Pending: YOLO11m comparison (Kaggle), transformer route-context, VAE/GAN, evaluation package, report, demo. Open: faculty decision on VAE-only (O-03).
+
+## Status 15 Nov 2026 (integration)
+- M4: YOLO11m selected (val mAP50-95 0.182 vs 0.162); Java fixture test PASS (scripts/test_route.sh).
+- M7: route-context transformer integrated in Java (RouteScorer, RouteTest); dashboard has a Scoring selector. Run: bash scripts/run_dashboard.sh (self-test: --selftest). YOLO11s heuristic path: bash scripts/run_app.sh.
+- VAE and DCGAN are offline Python results (results/generative, docs/RESULTS.md); no Java inference needed.
+- Pending: evaluation package (YOLO11m error analysis, planner vs serpentine over the test split), report, demo script.
