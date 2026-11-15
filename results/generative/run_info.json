@@ -1,0 +1,10 @@
+{
+ "python": "3.13.16",
+ "torch": "2.11.0+cu130",
+ "ultralytics": "8.4.212",
+ "sklearn": "1.6.1",
+ "gpu": "Tesla T4",
+ "seed": 0,
+ "finished": "2026-11-15 13:41:00",
+ "note": "GAN/VAE resumed runs are not bit-identical to uninterrupted runs"
+}

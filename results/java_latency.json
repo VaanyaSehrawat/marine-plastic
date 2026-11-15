@@ -1,0 +1,6 @@
+{
+  "source": "FixtureTest output on the student's MacBook M4, ONNX Runtime 1.20.0 CPU, JDK 21, one warm-up run then one timed run per image",
+  "images": ["001075.png", "002907.png", "003278.png"],
+  "yolo11s_ms": [694, 654, 549],
+  "yolo11m_ms": [1879, 1839, 1835]
+}

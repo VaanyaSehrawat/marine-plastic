@@ -1,0 +1,32 @@
+
+===== Cell E run 2026-11-15 13:11:46 | config key 4434e635 | detector key 79e633ff_d48ddb77 =====
+
+=== DETECTOR COMPARISON (conf=0.001, iou=0.6, imgsz=1280, max_det=400) ===
+YOLO11s val: P=0.313 R=0.344 mAP50=0.263 mAP50-95=0.162
+YOLO11s test: P=0.299 R=0.301 mAP50=0.237 mAP50-95=0.144
+YOLO11m val: P=0.334 R=0.362 mAP50=0.291 mAP50-95=0.182
+YOLO11m test: P=0.307 R=0.333 mAP50=0.252 mAP50-95=0.157
+check: YOLO11s_test mAP50-95 0.144 agrees with the earlier run (0.144)
+check: YOLO11s_val mAP50-95 0.162 agrees with the earlier run (0.160)
+[4.2 min]
+crops: train 12000, val 3000 | classes present in train 13 | train class counts [1123, 492, 674, 415, 410, 1052, 390, 594, 339, 178, 1181, 2714, 2438]
+[5.2 min]
+  VAE epoch 10/40 loss 172.02
+  VAE epoch 20/40 loss 165.72
+  VAE epoch 30/40 loss 161.81
+  VAE epoch 40/40 loss 157.68
+
+=== VAE vs PCA (64 latent dims, held-out val crops, PCA output clipped to [0,1]) ===
+reconstruction MSE per pixel: VAE 0.01193 | PCA 0.01132
+5-NN class accuracy in latent space (13 classes): VAE 0.181 | PCA 0.190 | train-majority-class baseline 0.197
+[7.5 min]
+  GAN epoch 20/80 D loss 0.572 G loss 4.806
+  GAN epoch 40/80 D loss 0.571 G loss 5.079
+  GAN epoch 60/80 D loss 0.562 G loss 5.232
+  GAN epoch 80/80 D loss 0.495 G loss 5.096
+
+=== GAN copy check (pixel-space L2 to nearest training crop, scale [-1,1]) ===
+generated (256): median 33.0, min 16.0 | real held-out val crops (256): median 35.4, min 11.3
+share of generated samples closer to a training crop than every real val crop: 0.0% (near 0% means no sign of memorisation)
+No FID computed. Sample quality is judged visually from the grid only.
+[29.2 min]
