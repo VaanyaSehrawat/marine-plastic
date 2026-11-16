@@ -1,0 +1,280 @@
+{
+ "test": {
+  "n_gt": 22040,
+  "n_dets_op": 16955,
+  "recall_class_aware_op": 31.46098003629764,
+  "found_any_class_op": 49.201451905626136,
+  "class_correct_among_found_op": 61.453338251567686,
+  "found_any_class_low": 70.68511796733212,
+  "precision_op": 40.8964907107048,
+  "per_class": {
+   "pet_bottle": {
+    "n_gt": 997,
+    "ap50": 0.40674397158369785,
+    "recall_op": 51.053159478435305,
+    "precision_op": 43.28231292517007,
+    "found_any_class_op": 66.39919759277834,
+    "class_correct_among_found_op": 74.77341389728096
+   },
+   "other_bottle": {
+    "n_gt": 514,
+    "ap50": 0.0334249434727317,
+    "recall_op": 7.587548638132295,
+    "precision_op": 20.207253886010363,
+    "found_any_class_op": 55.447470817120625,
+    "class_correct_among_found_op": 9.473684210526315
+   },
+   "plastic_bag": {
+    "n_gt": 242,
+    "ap50": 0.05173218114161536,
+    "recall_op": 12.809917355371901,
+    "precision_op": 17.032967032967033,
+    "found_any_class_op": 54.13223140495868,
+    "class_correct_among_found_op": 22.137404580152673
+   },
+   "box_shaped_case": {
+    "n_gt": 262,
+    "ap50": 0.3562919932568592,
+    "recall_op": 47.32824427480916,
+    "precision_op": 41.891891891891895,
+    "found_any_class_op": 80.91603053435115,
+    "class_correct_among_found_op": 54.716981132075475
+   },
+   "other_container": {
+    "n_gt": 327,
+    "ap50": 0.2050494423494203,
+    "recall_op": 33.333333333333336,
+    "precision_op": 31.594202898550726,
+    "found_any_class_op": 75.22935779816514,
+    "class_correct_among_found_op": 35.36585365853659
+   },
+   "rope": {
+    "n_gt": 452,
+    "ap50": 0.10330345122649662,
+    "recall_op": 20.13274336283186,
+    "precision_op": 28.4375,
+    "found_any_class_op": 31.63716814159292,
+    "class_correct_among_found_op": 59.44055944055944
+   },
+   "other_string": {
+    "n_gt": 133,
+    "ap50": 0.019925914589804174,
+    "recall_op": 4.511278195488722,
+    "precision_op": 11.764705882352942,
+    "found_any_class_op": 27.81954887218045,
+    "class_correct_among_found_op": 16.216216216216218
+   },
+   "fishing_net": {
+    "n_gt": 323,
+    "ap50": 0.24912870248378596,
+    "recall_op": 27.24458204334365,
+    "precision_op": 45.59585492227979,
+    "found_any_class_op": 48.297213622291025,
+    "class_correct_among_found_op": 53.84615384615385
+   },
+   "buoy": {
+    "n_gt": 887,
+    "ap50": 0.2888943573253233,
+    "recall_op": 32.91995490417136,
+    "precision_op": 54.17439703153989,
+    "found_any_class_op": 53.66403607666291,
+    "class_correct_among_found_op": 58.8235294117647
+   },
+   "other_fishing_gear": {
+    "n_gt": 185,
+    "ap50": 0.32140413039710286,
+    "recall_op": 43.24324324324324,
+    "precision_op": 41.02564102564103,
+    "found_any_class_op": 59.45945945945946,
+    "class_correct_among_found_op": 70.0
+   },
+   "styrene_foam": {
+    "n_gt": 2610,
+    "ap50": 0.23454360465526658,
+    "recall_op": 27.816091954022987,
+    "precision_op": 51.5625,
+    "found_any_class_op": 55.32567049808429,
+    "class_correct_among_found_op": 46.95290858725762
+   },
+   "others": {
+    "n_gt": 4693,
+    "ap50": 0.07780645549353352,
+    "recall_op": 11.591732367355636,
+    "precision_op": 30.665163472378804,
+    "found_any_class_op": 42.93628808864266,
+    "class_correct_among_found_op": 23.672456575682382
+   },
+   "fragment": {
+    "n_gt": 10415,
+    "ap50": 0.29218744763348337,
+    "recall_op": 41.23859817570811,
+    "precision_op": 41.76796654672761,
+    "found_any_class_op": 47.30676908305329,
+    "class_correct_among_found_op": 85.71138623909073
+   }
+  },
+  "per_size": {
+   "small (< 32x32 px)": {
+    "n_gt": 19747,
+    "share_pct": 89.5961887477314,
+    "recall_op": 30.490707449232794,
+    "found_any_class_op": 47.46037372765483,
+    "found_any_class_low": 70.01063452676355
+   },
+   "medium (32x32 to 96x96 px)": {
+    "n_gt": 2022,
+    "share_pct": 9.174228675136115,
+    "recall_op": 39.960435212660734,
+    "found_any_class_op": 64.39169139465875,
+    "found_any_class_low": 76.70623145400593
+   },
+   "large (>= 96x96 px)": {
+    "n_gt": 271,
+    "share_pct": 1.2295825771324864,
+    "recall_op": 38.745387453874535,
+    "found_any_class_op": 62.730627306273064,
+    "found_any_class_low": 74.90774907749078
+   }
+  },
+  "map50_own": 0.20311050735454778
+ },
+ "val": {
+  "n_gt": 24643,
+  "n_dets_op": 17376,
+  "recall_class_aware_op": 31.75749705798807,
+  "found_any_class_op": 46.99914783102707,
+  "class_correct_among_found_op": 64.97150751165601,
+  "found_any_class_low": 66.7532362131234,
+  "precision_op": 45.03913443830571,
+  "per_class": {
+   "pet_bottle": {
+    "n_gt": 934,
+    "ap50": 0.40349655687680963,
+    "recall_op": 50.642398286937905,
+    "precision_op": 44.876660341555976,
+    "found_any_class_op": 69.80728051391863,
+    "class_correct_among_found_op": 69.93865030674847
+   },
+   "other_bottle": {
+    "n_gt": 549,
+    "ap50": 0.0710760109976596,
+    "recall_op": 11.839708561020036,
+    "precision_op": 30.373831775700936,
+    "found_any_class_op": 63.9344262295082,
+    "class_correct_among_found_op": 13.96011396011396
+   },
+   "plastic_bag": {
+    "n_gt": 700,
+    "ap50": 0.057219101505056665,
+    "recall_op": 11.714285714285714,
+    "precision_op": 28.08219178082192,
+    "found_any_class_op": 47.42857142857143,
+    "class_correct_among_found_op": 21.08433734939759
+   },
+   "box_shaped_case": {
+    "n_gt": 209,
+    "ap50": 0.41531212379817256,
+    "recall_op": 49.282296650717704,
+    "precision_op": 42.38683127572016,
+    "found_any_class_op": 77.51196172248804,
+    "class_correct_among_found_op": 59.25925925925926
+   },
+   "other_container": {
+    "n_gt": 300,
+    "ap50": 0.2693589535641684,
+    "recall_op": 40.666666666666664,
+    "precision_op": 35.88235294117647,
+    "found_any_class_op": 81.33333333333333,
+    "class_correct_among_found_op": 41.80327868852459
+   },
+   "rope": {
+    "n_gt": 635,
+    "ap50": 0.10163849593552055,
+    "recall_op": 16.69291338582677,
+    "precision_op": 27.46113989637306,
+    "found_any_class_op": 28.188976377952756,
+    "class_correct_among_found_op": 55.865921787709496
+   },
+   "other_string": {
+    "n_gt": 212,
+    "ap50": 0.05286708961664884,
+    "recall_op": 8.962264150943396,
+    "precision_op": 19.587628865979383,
+    "found_any_class_op": 31.132075471698112,
+    "class_correct_among_found_op": 27.272727272727273
+   },
+   "fishing_net": {
+    "n_gt": 393,
+    "ap50": 0.21570605841446422,
+    "recall_op": 24.936386768447836,
+    "precision_op": 43.17180616740088,
+    "found_any_class_op": 47.32824427480916,
+    "class_correct_among_found_op": 47.31182795698925
+   },
+   "buoy": {
+    "n_gt": 500,
+    "ap50": 0.40480732477063053,
+    "recall_op": 45.2,
+    "precision_op": 59.63060686015831,
+    "found_any_class_op": 63.4,
+    "class_correct_among_found_op": 68.76971608832808
+   },
+   "other_fishing_gear": {
+    "n_gt": 261,
+    "ap50": 0.5080225069164345,
+    "recall_op": 54.78927203065134,
+    "precision_op": 47.50830564784053,
+    "found_any_class_op": 66.66666666666667,
+    "class_correct_among_found_op": 81.03448275862068
+   },
+   "styrene_foam": {
+    "n_gt": 2024,
+    "ap50": 0.20768428986880083,
+    "recall_op": 27.865612648221344,
+    "precision_op": 44.79745830023828,
+    "found_any_class_op": 52.865612648221344,
+    "class_correct_among_found_op": 49.7196261682243
+   },
+   "others": {
+    "n_gt": 4564,
+    "ap50": 0.048611047119275365,
+    "recall_op": 9.202453987730062,
+    "precision_op": 26.365348399246706,
+    "found_any_class_op": 40.16213847502191,
+    "class_correct_among_found_op": 19.367157665030007
+   },
+   "fragment": {
+    "n_gt": 13362,
+    "ap50": 0.33360714951402,
+    "recall_op": 40.4505313575812,
+    "precision_op": 49.17659903557456,
+    "found_any_class_op": 45.023200119742555,
+    "class_correct_among_found_op": 88.09840425531915
+   }
+  },
+  "per_size": {
+   "small (< 32x32 px)": {
+    "n_gt": 22018,
+    "share_pct": 89.34788783833137,
+    "recall_op": 31.083658824598057,
+    "found_any_class_op": 45.28113361794895,
+    "found_any_class_low": 66.12317195022254
+   },
+   "medium (32x32 to 96x96 px)": {
+    "n_gt": 2309,
+    "share_pct": 9.369800754778232,
+    "recall_op": 37.981810307492424,
+    "found_any_class_op": 62.49458640103941,
+    "found_any_class_low": 73.01862278042442
+   },
+   "large (>= 96x96 px)": {
+    "n_gt": 316,
+    "share_pct": 1.282311406890395,
+    "recall_op": 33.22784810126582,
+    "found_any_class_op": 53.48101265822785,
+    "found_any_class_low": 64.87341772151899
+   }
+  },
+  "map50_own": 0.23764666991520475
+ }
+}
