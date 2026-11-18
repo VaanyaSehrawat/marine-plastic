@@ -1,4 +1,7 @@
 # HANDOFF.md - shared state (Claude = technical lead, ChatGPT = tutor/execution guide, student = owner)
+
+> **Historical sections:** the status table and "Known issues" below were written on 5 Nov 2026 before any real data was used. They are superseded by the section "Status 17 Nov 2026 (final)" at the end of this file.
+
 Last updated: 2026-11-05 | Deadline **2026-11-22** (aim: submit 21 Nov) | Solo, 5-6 h/day, free tools only.
 Read also: `DECISIONS.md` (what is approved/provisional/open), `docs/MILESTONES.md` (pass/fail), `docs/RESEARCH_NOTES.md` (all research, no need to redo), `docs/M3_DATASET_VALIDATION.md`.
 
@@ -17,7 +20,7 @@ Temurin 21.0.13+9 | uv 0.13.7 | CPython 3.12 (uv-managed) | **onnxruntime 1.20.0
 
 ## Evidence legend: G generated | S sandbox (Linux x86_64) | M student's Mac | D real data
 
-## Status
+## Status (historical, 5 Nov 2026)
 | Item | Evidence | Notes |
 |---|---|---|
 | setup.sh / env.sh / lib.sh | G, S | Linux dev mode (`MP_DEV_ALLOW_LINUX=1`): fresh install, idempotent re-run, `--check`, corrupt cache, broken JDK folder, checksum-mismatch stop + recovery. Student ran `--check` on the Mac (preflight passed). macOS-only branches (sw_vers, Rosetta, xcode-select, arm64 `file`) never executed in full on the Mac. |
@@ -33,13 +36,13 @@ Temurin 21.0.13+9 | uv 0.13.7 | CPython 3.12 (uv-managed) | **onnxruntime 1.20.0
 `pytest tests/python`: 28 passed, 1 skipped (with and without pycocotools installed). shellcheck: only false-positive "unused variable" warnings (variables are used by sourcing scripts). Real-ORT Linux smoke test: PASS (above). Fetch-script scenarios: good jar OK; rerun idempotent; wrong pin -> jar moved aside, new download rejected; jar with only `osx-arm64` -> FAIL with folder listing. Full dev-mode setup regression after the final edits: see the session report.
 Static inspection only: macOS branches of setup.sh, `env.sh` zsh/bash behaviour was tested on Linux zsh/bash only, notebook code cells (JSON valid, syntax checked, never executed).
 
-## Known issues / unverified
+## Known issues / unverified (historical, 5 Nov 2026)
 - Mac smoke test not run. Expected: see README. Failure modes and responses are in README troubleshooting.
 - Dataset statistics are UNVERIFIED claims until M3 (see DATASET_CARD). BePLi archive layout and download URL unverified.
 - `setup.sh` progress output from `curl` is noisy in logs (cosmetic).
 - Git: the folder was not a repo; setup initialises it and commits only if `user.name`/`user.email` exist.
 
-## Next tasks (in order)
+## Next tasks (historical, 5 Nov 2026)
 1. **Student:** run the Mac sequence in README (extract, `bash setup.sh --minimal`, `source env.sh && bash scripts/run_tests.sh`). Report: full output of both commands, or `logs/diagnostics-*.txt` on failure. Pass = `ONNX smoke test PASSED` with `os.arch=aarch64` and `SETUP COMPLETE`.
 2. **If M2 passes:** update this file's status (Mac rows -> M), run `bash setup.sh` (full) once, then start M3 on Colab per `docs/M3_DATASET_VALIDATION.md`.
 3. **If the Java step fails** with natives/arch errors: do not reopen the version decision first; send diagnostics to Claude; fallback D-07 (HTTP detector) is pre-approved.

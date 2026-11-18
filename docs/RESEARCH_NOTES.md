@@ -1,4 +1,7 @@
 # Research notes (so no one needs to repeat the research)
+
+> **Later verified:** the BePLi v2 counts, per-class counts, archive layout and split audit marked UNVERIFIED below were measured afterwards; see docs/DATASET_CARD.md. The notes below are the 5 Nov 2026 snapshot.
+
 Compiled 2026-11-05. "Verified" = read from the official record/source. Everything else is marked UNVERIFIED.
 
 ## ONNX Runtime Java on Apple Silicon

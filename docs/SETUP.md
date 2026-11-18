@@ -1,5 +1,8 @@
 # Marine Plastic Detection and Coastal Cleanup Planner
 
+> **Historical status line:** the status text below dates from 5 Nov 2026. Milestones 1 and 2 were later verified on the Mac; see docs/MILESTONES.md.
+
+
 Individual B.Tech CSE (AI & ML) Deep Learning project, Ocean Conservation domain. **Deadline: 22 November 2026.**
 
 **Architecture:** Python + PyTorch train/evaluate models on Colab -> ONNX -> a Java 21 application runs them with ONNX Runtime

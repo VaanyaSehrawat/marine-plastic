@@ -1,5 +1,8 @@
 # Milestone 3 - Dataset validation (Colab). Run only after M2 passes on the Mac.
 
+> **Historical procedure (5 Nov 2026):** what was actually done is in docs/DATASET_CARD.md and notebooks/INDEX.md. The compact JPEG copy and grouped re-split described below were not made; the official split and full images were used.
+
+
 Objective: decide, from the ACTUAL files, whether BePLi v2 is fit to train on; freeze leakage-safe splits and tile-label rules.
 Tools exist (generated; tested on synthetic data only). Nothing has been run on real data.
 

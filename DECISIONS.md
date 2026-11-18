@@ -42,3 +42,20 @@ Last updated: 2026-11-05.
 | ID | Decision | Reason / evidence |
 |---|---|---|
 | D-09 | Dashboard default detector is YOLO11m (YOLO11s stays available with `MODEL_DIR=yolo11s_1280 bash scripts/run_dashboard.sh`). Learned tile priority uses a 71,233-parameter route-context transformer (ONNX, run in Java), trained on val-split detections, selectable in the dashboard next to the heuristic scoring. | Detectors (official splits, 1280 px, conf 0.001, NMS IoU 0.6, one training run each): YOLO11m val mAP50-95 0.182 and test 0.157; YOLO11s val 0.162 and test 0.144. Java CPU inference on the student's Mac (3 fixture images, after one warm-up): YOLO11m 1835-1879 ms, YOLO11s 549-694 ms. Tile ranking on test (610 images with at least 5 ground-truth tiles): Spearman transformer 0.661 +- 0.001, tile MLP 0.660 +- 0.001, detector-only score 0.531, random -0.007; top-5 overlap 0.591, 0.590, 0.524, 0.095. Cross-tile context gave no measurable gain over the MLP. Labels are ground-truth boxes weighted by the same class weights, so this measures agreement with a proxy, not cleanup efficiency. Java checks: scripts/test_route.sh and scripts/run_dashboard.sh --selftest PASS. |
+
+
+## Update 17 Nov 2026 - Resolution of open and provisional items
+| ID | Outcome |
+|---|---|
+| D-06 | Superseded by D-08: YOLO11 was used; torchvision Faster R-CNN and RetinaNet were not trained |
+| P-01 | Confirmed: BePLi v2 was the only dataset used; no unusable annotations found |
+| P-02 | Not done: UAVVaste was not used |
+| P-03 | Unchanged: BeachLitter and SeaClear were not used |
+| P-04 | Not needed: the official split was kept; audit found no filename or exact-duplicate overlap and no test image flagged by the combined near-duplicate rule |
+| P-05 | Not used: planner priority comes from ground-truth boxes with assumed class weights, not tile labels |
+| P-06 | Unchanged: non-commercial academic use; re-read the licences before any redistribution |
+| O-01 | Unresolved: whether consecutive file numbers share a site was not determined |
+| O-02 | Resolved: archive https://www.seanoe.org/data/00858/96963/data/106157.tar.gz extracts to `BePLi_dataset_v2/plastic_coco/` with `annotation/` and `images/{train,val,test}` |
+| O-03 | Moot: both a VAE and a DCGAN were built |
+| O-04 | Out: segmentation was not trained |
+| O-05 | Resolved: 118,572 annotations and 3,722 images, as measured (docs/DATASET_CARD.md) |

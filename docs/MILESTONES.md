@@ -1,17 +1,17 @@
-# Milestone checklist (pass/fail criteria)
-Evidence levels: G generated | S sandbox-tested (Linux x86_64) | M tested on the owner's Mac | D tested on real data.
-Deadline 22 Nov 2026 (aim to submit 21 Nov). Cut line 16 Nov; code freeze 18 Nov.
+# Milestone checklist (updated 17 Nov 2026)
 
-| ID | Milestone | Pass criteria | Evidence now |
+Evidence: M = run on the owner's MacBook, K = run on Kaggle (T4 GPU), D = real BePLi data. Deadline 22 Nov 2026 (aim to submit 21 Nov). The original plan (5 Nov) used different detectors and extra items; where the plan changed, the row says what was actually done.
+
+| ID | Milestone | What was done | Evidence |
 |---|---|---|---|
-| M1 | Environment | `bash setup.sh --minimal` ends with `SETUP COMPLETE`; JDK 21 arm64 and Python 3.12 inside `.tools/`/`.venv/`; system Java/Python unchanged | S (Linux dev mode); **Mac: not run** |
-| M2 | ONNX integration proof | `bash scripts/run_tests.sh` ends `all tests passed`; Java prints `os.arch=aarch64`, `max|diff|` <= 1e-5+1e-4*|x| for batch 2 and 1, `[java] PASS`, then `ONNX smoke test PASSED` | Python half S; Java half: real ORT 1.20.0 API+engine on Linux S (JNI bridge built from official source, **not** the official jar); **Mac: not run** |
-| M3 | Dataset validation (Colab) | Notebook 01 run: inspection report with measured counts vs claims; manual visual review done; leakage audit + `check_leakage` = PASS; splits frozen in `data/splits/`; DATASET_CARD updated with measured numbers; tile-label counts reviewed | Tools G + S on synthetic data only; **no real data touched** |
-| M4 | Detector trained | Faster R-CNN trained on frozen train split; mAP@0.5 and mAP@[.5:.95] on **val** logged; test split untouched; checkpoints on Drive | not started |
-| M4b | Second detector + tile classifiers | RetinaNet, ResNet18, GoogLeNet evaluated on the same val split | not started |
-| M4c | ONNX export of best detector + real-model parity | PyTorch vs Java on 20 fixed tiles: boxes IoU >= 0.95, score diff <= 1e-3, same count above 0.5 | not started |
-| M5 | Java application | Upload image -> detections -> tile priority -> route order -> report, from the dashboard; fallback demo data works offline | not started |
-| M6 | Java fundamentals (essential demos) | `bash scripts/run_tests.sh` includes Java tests: tensor/SVD/gradcheck, MLP+backprop, optimizers, Hebbian/Oja/competitive/delta, RBM | not started |
-| M7 | Final evaluation | One run on the held-out **test** split, robustness (blur/brightness/JPEG), UAVVaste shift test, latency/memory, error analysis | not started |
-| M8 | Documentation + demo | README clean-clone verification, dataset card, model card, report, video, slides, viva Q&A | not started |
-| Stretch | Mask R-CNN, tile-context transformer, VAE latent plot | only after M5 works end-to-end | not started |
+| M1 | Environment | Project-local JDK 21.0.13 and Python 3.12.16, ONNX Runtime 1.20.0, 28 Python tests passed (1 skipped); re-checked by `scripts/verify_all.sh` | M |
+| M2 | ONNX integration proof | Java ONNX Runtime smoke test passed on aarch64 (max difference about 1.2e-07) | M |
+| M3 | Dataset validation | BePLi v2 downloaded and audited: counts, class totals, annotation checks, leakage audit, visual review (docs/DATASET_CARD.md). Official split kept; no grouped re-split; no tile labels | D |
+| M4 | Detector trained | Changed from Faster R-CNN to YOLO11s and YOLO11m at 1280 px (DECISIONS D-08). Test mAP50-95 0.144 and 0.157; one run each | K, D |
+| M4b | Second detector and tile classifiers | NOT DONE (RetinaNet, ResNet18, GoogLeNet were not trained) | - |
+| M4c | ONNX export and real-model parity | Done on 3 fixture images instead of 20 tiles: boxes differ by at most 0.0212 px, scores by 2e-6, identical detection counts; Java reproduces them | M, D |
+| M5 | Java application | Dashboard: image (sample or upload) to detections, tile priority, route order. Runs offline. No exported report file | M |
+| M6 | Java fundamentals | Tensor, SVD, MLP with backpropagation, SGD, Momentum, Adam, Hebbian (Oja), competitive learning: 100 checks. Delta rule and RBM were NOT implemented | M |
+| M7 | Final evaluation | Detector comparison, detector error analysis, planner evaluation, latency on 3 images (docs/RESULTS.md, DETECTOR_ANALYSIS.md, PLANNER_EVAL.md). NOT done: robustness tests (blur, brightness, JPEG), out-of-domain test, memory measurement. Validation split chose the detector; the test split was scored for both models | M, K, D |
+| M8 | Documentation and demo | README, report draft, demo script, jury Q&A, deck, verification script, submission package. Still open: report [student] sections, recorded video, model card, clean-clone run | M |
+| Stretch | Mask R-CNN, tile-context transformer, VAE | Transformer, VAE and DCGAN done; Mask R-CNN NOT done | M, K |
